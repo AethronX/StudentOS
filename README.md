@@ -10,8 +10,8 @@ The product itself lives in Notion. This repository documents its architecture s
 
 Most student templates are a prettier to-do list. This one is a relational system: courses feed assignments, assignments feed tasks, grades feed GPA automatically.
 
-- **21 connected databases**
-- **27 pre-built views** (tables, boards, calendars, galleries, lists)
+- **23 connected databases**
+- **35 pre-built views** (tables, boards, calendars, galleries, lists, charts, a form)
 - **Automatic GPA** from letter grades and credit hours
 - **Self-updating urgency** — everything with a date tags itself Overdue / Today / This week
 - Mobile-first: every view capped at three visible columns with the title frozen
@@ -35,7 +35,8 @@ All databases live on a hidden `⚙️ System Databases` page. Every user-facing
 | Study Notes | Note, Date, Tags | Courses |
 | Study Projects | Project, Status, Deadline | Courses, Tasks |
 | Academic Goals | Goal, Category, Target Date, Status, Progress, Why It Matters | Courses |
-| Academic Goals | Goal, Category, Target Date, Status, Progress, Why It Matters | Courses |
+| Flashcards | Question, Answer, Deck, Last Reviewed, Reps, Ease, Retired | Courses |
+| Study Sessions | Session, Date, Minutes, Technique, Focus, What I covered | Courses |
 | Tasks | Task, Due Date, Status, Priority, Category | Assignments, Projects, Skills |
 | Skills To Learn | Skill, Status, Resources | Tasks |
 
@@ -110,6 +111,24 @@ ordering re-evaluates every day and never goes stale.
 | `Jobs.Total Earned` | `rollup(Shifts → Pay, sum)` |
 | `Habits.Completion Rate` | `rollup(Log → Done, average)` |
 | `Habits.Success Rate %` | `round(Completion Rate × 100)` |
+| `Courses.Study Minutes` | `rollup(Study Sessions → Minutes, sum)` |
+
+**Spaced repetition** — the flashcard scheduler:
+
+```
+Interval      = Again → 1 day
+                Hard  → max(1, Reps × 1.2)
+                Good  → max(2, Reps × 2.5)
+                Easy  → max(4, Reps × 4)
+
+Next Review   = Last Reviewed + Interval days
+Review Status = New / Due now / Soon / Scheduled / Retired
+```
+
+The student rates a card and increments Reps; the schedule follows. Notion has
+no way to mutate a property from a formula, so the interval is derived from
+`Reps × Ease` rather than compounding a stored value — the practical behaviour
+matches SM-2 closely enough while staying entirely declarative.
 
 Note: Notion's API does not serialize computed formula/rollup *results* — it returns opaque references. These were validated structurally (Notion rejects malformed formulas at write time) but the rendered values should be confirmed visually in the Notion UI.
 
@@ -125,12 +144,48 @@ Student OS Pro
 │   ├── ⚡ Quick Actions     — capture a task, note, assignment, exam, material
 │   ├── 🎓 Student Area      — Courses, Schedule, Goals, Exams, Materials,
 │   │                          Notes, Projects, Agenda, Tasks, Skills
+│   ├── 🧠 Study Hub         — self-scheduling flashcards, session log, chart
 │   ├── 💼 Jobs Area         — Part-time Job, Internships & Jobs
 │   ├── 💳 Finance Manager   — Finance OS Pro
 │   └── 🧬 Personal Area     — Fitness, Meals, Journal, Books, Habits, Contacts
 ├── Work Flow                — quick-action navigation
 └── ⚙️ System Databases      — all 20 databases (hidden from navigation)
 ```
+
+---
+
+## Competitive positioning
+
+Surveyed against the established Notion student templates (Student OS by
+heyismail, Notion x Students, University Hub, Janice Studies' dashboard, and
+the spaced-repetition flashcard templates on Notion's marketplace). Four gaps
+recur across the category, and each maps to a specific decision here:
+
+**1. "Templates stop at planning."** The most common criticism of the category
+is that deadlines get stored and then sit buried inside a page — nothing tells
+you what matters today. Answered by the urgency engine: every dated item tags
+itself and views sort on it, so the front of every list is the work that is
+actually urgent.
+
+**2. Flashcards in Notion are usually fake.** Nearly every "spaced repetition"
+template is a toggle that hides an answer. That is active recall, but with no
+scheduling it is only half the method — you re-review what you already know.
+Ours computes an interval and a next-review date from your own rating. This is
+the sharpest differentiator, because it is the feature most often claimed and
+least often actually implemented.
+
+**3. Templates get abandoned around week three.** A 23-database workspace
+handed over all at once is a reliable way to make someone quit. Start Here
+therefore prescribes three pages for week one and explicitly tells the user to
+ignore and delete the rest. No competitor does this; they showcase everything,
+which is good for a sales page and bad for retention.
+
+**4. "More clicks to track an assignment than to do it."** Capture friction
+kills systems. Answered with a form view for one-tap mobile capture and Quick
+Action pages that open straight into the right database.
+
+Where the category is already strong — grade calculators, assignment trackers,
+reading lists — this matches rather than reinvents.
 
 ---
 
@@ -174,3 +229,9 @@ marketing/     — Instagram carousel generator (paused with the site)
   structurally rather than by reading them back. Confirm them visually in Notion.
 - **Database templates cannot be created via the API**, so a new course page
   opens blank rather than pre-structured.
+- **Button blocks cannot be created via the API** either — they read back as an
+  unknown block type. One-tap "review this card" grading would otherwise be a
+  button; today it is two field edits.
+- **`GROUP BY` on a formula property is silently dropped.** The API accepts the
+  request and returns a view with no grouping. Sorting on a formula does work,
+  which is why the status labels carry numeric prefixes.
