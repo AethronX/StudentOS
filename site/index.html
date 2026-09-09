@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Student OS Pro — Your entire student life, in one system</title>
+<meta name="description" content="A connected Notion system for university students. 20 linked databases that calculate your GPA, count down deadlines, and track your money — automatically.">
+<meta name="theme-color" content="#0B1020">
+
+<meta property="og:type" content="product">
+<meta property="og:title" content="Student OS Pro — Your entire student life, in one system">
+<meta property="og:description" content="Not another to-do list. 20 connected databases that calculate your GPA, count down deadlines, and track your money — automatically.">
+<meta property="og:image" content="assets/cover-root.svg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%234F46E5'/><text y='.9em' x='50%25' text-anchor='middle' font-size='62' font-family='system-ui'>🎓</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="#top">
+      <span class="brand__mark" aria-hidden="true">🎓</span>
+      <span class="brand__text">Student<span class="brand__accent">OS</span></span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#features" data-i18n="nav.features">Features</a>
+      <a href="#inside" data-i18n="nav.inside">What's inside</a>
+      <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
+      <a href="#faq" data-i18n="nav.faq">FAQ</a>
+    </nav>
+
+    <div class="nav__actions">
+      <button class="langbtn" id="langToggle" type="button" aria-label="Switch language">
+        <span data-lang-label>العربية</span>
+      </button>
+      <a class="btn btn--sm btn--primary" href="#pricing" data-i18n="nav.cta">Get it now</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ───────────────────────── HERO ───────────────────────── -->
+  <section class="hero" id="top">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="wrap hero__inner">
+
+      <p class="eyebrow">
+        <span class="dot" aria-hidden="true"></span>
+        <span data-i18n="hero.eyebrow">Built for university students</span>
+      </p>
+
+      <h1 class="hero__title" data-i18n="hero.title">
+        Your entire student life,<br><em>finally</em> in one system.
+      </h1>
+
+      <p class="hero__sub" data-i18n="hero.sub">
+        Not another pretty to-do list. Student OS Pro is 20 connected databases that
+        calculate your GPA, count down your deadlines, and track your money — automatically.
+      </p>
+
+      <div class="hero__cta">
+        <a class="btn btn--primary btn--lg" href="#pricing">
+          <span data-i18n="hero.cta">Get Student OS Pro</span>
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn--ghost btn--lg" href="#features" data-i18n="hero.cta2">See how it works</a>
+      </div>
+
+      <ul class="hero__badges">
+        <li><span aria-hidden="true">✓</span> <span data-i18n="hero.b1">Works on the free Notion plan</span></li>
+        <li><span aria-hidden="true">✓</span> <span data-i18n="hero.b2">Phone, tablet &amp; desktop</span></li>
+        <li><span aria-hidden="true">✓</span> <span data-i18n="hero.b3">Lifetime updates</span></li>
+      </ul>
+
+      <!-- Illustrative interface preview (design element, not a screenshot) -->
+      <div class="preview" role="img" aria-label="Illustration of the Student OS Pro dashboard">
+        <div class="preview__chrome" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="preview__body">
+          <div class="pcard pcard--gpa">
+            <span class="pcard__label" data-i18n="prev.gpa">Semester GPA</span>
+            <strong class="pcard__value">3.47</strong>
+            <span class="pcard__meta">Fall 2026 · 7 <span data-i18n="prev.credits">credits</span></span>
+          </div>
+          <div class="pcard">
+            <span class="pcard__label" data-i18n="prev.due">Due soon</span>
+            <div class="prow"><span>Essay: Cognitive Biases</span><b class="tag tag--red">2d</b></div>
+            <div class="prow"><span>Problem Set 3</span><b class="tag tag--amber">4d</b></div>
+            <div class="prow"><span>Group Presentation</span><b class="tag">11d</b></div>
+          </div>
+          <div class="pcard">
+            <span class="pcard__label" data-i18n="prev.progress">Progress</span>
+            <div class="prow"><span>Essay</span><code class="bar">████░░░░░░</code></div>
+            <div class="prow"><span>Research Project</span><code class="bar">██████░░░░</code></div>
+          </div>
+          <div class="pcard pcard--wide">
+            <span class="pcard__label" data-i18n="prev.balance">Balance this month</span>
+            <div class="prow prow--big">
+              <b class="pos">+$620</b><span class="sep">·</span><b class="neg">−$257</b>
+              <span class="net">= <b>$363</b></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="preview__note" data-i18n="prev.note">Illustration of the system — not a screenshot.</p>
+
+    </div>
+  </section>
+
+  <!-- ───────────────────────── STATS ───────────────────────── -->
+  <section class="stats">
+    <div class="wrap stats__grid">
+      <div class="stat"><b>20</b><span data-i18n="stat.db">connected databases</span></div>
+      <div class="stat"><b>26</b><span data-i18n="stat.views">ready-made views</span></div>
+      <div class="stat"><b>0</b><span data-i18n="stat.math">manual GPA math</span></div>
+      <div class="stat"><b>5<small>min</small></b><span data-i18n="stat.setup">to set up</span></div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── PROBLEM ───────────────────────── -->
+  <section class="section section--tight">
+    <div class="wrap narrow">
+      <h2 class="h2" data-i18n="prob.title">Most student templates break by week three</h2>
+      <p class="lede" data-i18n="prob.sub">
+        They look beautiful on day one. Then you realise nothing is connected — you're
+        copying the same deadline into four places, adding up your own GPA on a
+        calculator, and guessing where your money went.
+      </p>
+      <div class="split">
+        <div class="split__col split__col--bad">
+          <h3 data-i18n="prob.bad">A normal template</h3>
+          <ul>
+            <li data-i18n="prob.bad1">Separate lists that don't talk to each other</li>
+            <li data-i18n="prob.bad2">You calculate your own GPA</li>
+            <li data-i18n="prob.bad3">Deadlines live in three places</li>
+            <li data-i18n="prob.bad4">Unusable on a phone — endless sideways scrolling</li>
+            <li data-i18n="prob.bad5">Arrives empty, so you never start</li>
+          </ul>
+        </div>
+        <div class="split__col split__col--good">
+          <h3 data-i18n="prob.good">Student OS Pro</h3>
+          <ul>
+            <li data-i18n="prob.good1">One course links to its assignments, exams, notes &amp; materials</li>
+            <li data-i18n="prob.good2">GPA calculates itself from your grades</li>
+            <li data-i18n="prob.good3">Every deadline lands on one Agenda</li>
+            <li data-i18n="prob.good4">Built phone-first — 3 columns, never a sideways scroll</li>
+            <li data-i18n="prob.good5">Comes filled in, so you see it working immediately</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── FEATURES ───────────────────────── -->
+  <section class="section" id="features">
+    <div class="wrap">
+      <h2 class="h2 center" data-i18n="feat.title">The engine under the hood</h2>
+      <p class="lede center" data-i18n="feat.sub">
+        These connections are the difference between a system and a set of lists.
+      </p>
+
+      <div class="cards">
+        <article class="card card--hero">
+          <div class="card__icon" aria-hidden="true">🧮</div>
+          <h3 data-i18n="feat.1t">Your GPA calculates itself</h3>
+          <p data-i18n="feat.1b">
+            Set a letter grade on a course. It converts to grade points, weights by credit
+            hours, and rolls up into your semester GPA. Change one grade and everything
+            updates. No spreadsheets, no calculator.
+          </p>
+          <div class="minidemo">
+            <span class="chip">A−</span><span class="op">×</span>
+            <span class="chip">3 <small data-i18n="feat.cr">cr</small></span>
+            <span class="op">+</span>
+            <span class="chip">B+</span><span class="op">×</span>
+            <span class="chip">4 <small data-i18n="feat.cr">cr</small></span>
+            <span class="op">=</span>
+            <span class="chip chip--out">GPA 3.47</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__icon" aria-hidden="true">🔗</div>
+          <h3 data-i18n="feat.2t">Everything links to a course</h3>
+          <p data-i18n="feat.2b">
+            Assignments, exams, notes, materials and projects all connect back. Open one
+            course and its whole picture is already there — nothing to maintain by hand.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card__icon" aria-hidden="true">⏱️</div>
+          <h3 data-i18n="feat.3t">Live deadline countdowns</h3>
+          <p data-i18n="feat.3b">
+            Every assignment shows days remaining and a visual progress bar, so "later"
+            turns into a real number before it turns into a problem.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card__icon" aria-hidden="true">💳</div>
+          <h3 data-i18n="feat.4t">Money that adds up</h3>
+          <p data-i18n="feat.4b">
+            Income and expenses in one ledger. Sums handle the plus and minus for you, so
+            your real balance is one glance, not an evening of arithmetic.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card__icon" aria-hidden="true">💼</div>
+          <h3 data-i18n="feat.5t">Work that pays you back</h3>
+          <p data-i18n="feat.5b">
+            Log a shift with hours and rate — pay calculates per shift and totals per job.
+            Track internship applications from wishlist through to offer.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card__icon" aria-hidden="true">📱</div>
+          <h3 data-i18n="feat.6t">Actually works on your phone</h3>
+          <p data-i18n="feat.6b">
+            Every view is capped at three visible columns with the title frozen. Most
+            templates hand you a 15-column table and call it mobile-friendly.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── WHAT'S INSIDE ───────────────────────── -->
+  <section class="section" id="inside">
+    <div class="wrap">
+      <h2 class="h2 center" data-i18n="in.title">What's inside</h2>
+      <p class="lede center" data-i18n="in.sub">Four connected areas covering the whole of student life.</p>
+
+      <div class="areas">
+        <article class="area area--academic">
+          <div class="area__art" style="background-image:url('assets/cover-academic.svg')" aria-hidden="true"></div>
+          <div class="area__body">
+            <h3>🎓 <span data-i18n="in.a1t">Student Area</span></h3>
+            <p data-i18n="in.a1b">Courses, weekly schedule, goals, exams, materials, notes, projects, agenda, tasks and skills.</p>
+            <ul class="pills">
+              <li data-i18n="in.a1p1">Courses &amp; GPA</li><li data-i18n="in.a1p2">Assignments</li>
+              <li data-i18n="in.a1p3">Exams</li><li data-i18n="in.a1p4">Notes</li>
+              <li data-i18n="in.a1p5">Agenda</li><li data-i18n="in.a1p6">Tasks</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="area area--jobs">
+          <div class="area__art" style="background-image:url('assets/cover-jobs.svg')" aria-hidden="true"></div>
+          <div class="area__body">
+            <h3>💼 <span data-i18n="in.a2t">Jobs Area</span></h3>
+            <p data-i18n="in.a2b">Part-time work with shift and income tracking, plus a full internship application pipeline.</p>
+            <ul class="pills">
+              <li data-i18n="in.a2p1">Shifts &amp; pay</li><li data-i18n="in.a2p2">Applications</li>
+              <li data-i18n="in.a2p3">Interviews</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="area area--finance">
+          <div class="area__art" style="background-image:url('assets/cover-finance.svg')" aria-hidden="true"></div>
+          <div class="area__body">
+            <h3>💳 <span data-i18n="in.a3t">Finance Manager</span></h3>
+            <p data-i18n="in.a3b">One ledger for income and expenses, categorised, with running totals you can trust.</p>
+            <ul class="pills">
+              <li data-i18n="in.a3p1">Income</li><li data-i18n="in.a3p2">Expenses</li>
+              <li data-i18n="in.a3p3">Categories</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="area area--personal">
+          <div class="area__art" style="background-image:url('assets/cover-personal.svg')" aria-hidden="true"></div>
+          <div class="area__body">
+            <h3>🧬 <span data-i18n="in.a4t">Personal Area</span></h3>
+            <p data-i18n="in.a4b">Because burning out is the fastest way to lose a semester. Fitness, meals, journal, books, habits and contacts.</p>
+            <ul class="pills">
+              <li data-i18n="in.a4p1">Habits</li><li data-i18n="in.a4p2">Journal</li>
+              <li data-i18n="in.a4p3">Meals</li><li data-i18n="in.a4p4">Books</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── PRICING ───────────────────────── -->
+  <section class="section" id="pricing">
+    <div class="wrap narrow">
+      <h2 class="h2 center" data-i18n="pr.title">One payment. Yours for good.</h2>
+      <p class="lede center" data-i18n="pr.sub">No subscription. Free updates for life.</p>
+
+      <div class="price">
+        <div class="price__glow" aria-hidden="true"></div>
+        <div class="price__head">
+          <span class="price__tag" data-i18n="pr.tag">Student OS Pro</span>
+          <div class="price__amount">
+            <span class="price__was" data-price-was>$49</span>
+            <span class="price__now" data-price-now>$29</span>
+          </div>
+          <span class="price__note" data-i18n="pr.note">One-time payment · lifetime access</span>
+        </div>
+
+        <ul class="price__list">
+          <li data-i18n="pr.f1">All 20 connected databases</li>
+          <li data-i18n="pr.f2">26 pre-built views (board, calendar, gallery, table)</li>
+          <li data-i18n="pr.f3">Automatic GPA engine</li>
+          <li data-i18n="pr.f4">Phone, tablet &amp; desktop optimised</li>
+          <li data-i18n="pr.f5">Sample data included — see it working instantly</li>
+          <li data-i18n="pr.f6">Step-by-step Start Here guide</li>
+          <li data-i18n="pr.f7">Free updates, forever</li>
+        </ul>
+
+        <a class="btn btn--primary btn--lg btn--block" id="buyBtn" href="#" data-checkout>
+          <span data-i18n="pr.cta">Get instant access</span>
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </a>
+        <p class="price__fine" data-i18n="pr.fine">
+          Secure checkout via Stripe. You'll get the Notion template link straight after payment.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── FAQ ───────────────────────── -->
+  <section class="section" id="faq">
+    <div class="wrap narrow">
+      <h2 class="h2 center" data-i18n="faq.title">Questions</h2>
+
+      <details class="faq" open>
+        <summary data-i18n="faq.q1">Do I need to pay for Notion?</summary>
+        <p data-i18n="faq.a1">No. Everything works on Notion's free personal plan.</p>
+      </details>
+      <details class="faq">
+        <summary data-i18n="faq.q2">Does it really work on a phone?</summary>
+        <p data-i18n="faq.a2">Yes — that was a design constraint, not an afterthought. Every table shows at most three columns with the title frozen in place, and the boards and calendars are built for a small screen.</p>
+      </details>
+      <details class="faq">
+        <summary data-i18n="faq.q3">My university doesn't use a 4.0 GPA scale.</summary>
+        <p data-i18n="faq.a3">Open the Courses database and edit the Grade Points formula to match your scale. Everything downstream recalculates automatically.</p>
+      </details>
+      <details class="faq">
+        <summary data-i18n="faq.q4">How do I get it after paying?</summary>
+        <p data-i18n="faq.a4">You get the Notion template link immediately after checkout. Click Duplicate and the whole system — databases, formulas and connections — copies into your own workspace.</p>
+      </details>
+      <details class="faq">
+        <summary data-i18n="faq.q5">Can I delete parts I don't need?</summary>
+        <p data-i18n="faq.a5">Yes. No job? Delete the Jobs Area. The only page to leave alone is System Databases, which every view reads from.</p>
+      </details>
+      <details class="faq">
+        <summary data-i18n="faq.q6">Is it in Arabic?</summary>
+        <p data-i18n="faq.a6">The template itself is in English, which is what most universities teach in. This page is bilingual, and you can rename any page or field in Notion to Arabic in seconds.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── FINAL CTA ───────────────────────── -->
+  <section class="final">
+    <div class="wrap narrow center">
+      <h2 class="h2" data-i18n="fin.title">Stop organising. Start studying.</h2>
+      <p class="lede" data-i18n="fin.sub">
+        Set it up once this week, and spend the rest of the semester actually using it.
+      </p>
+      <a class="btn btn--primary btn--lg" href="#pricing">
+        <span data-i18n="fin.cta">Get Student OS Pro</span>
+        <span class="btn__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <span class="brand brand--sm">
+      <span class="brand__mark" aria-hidden="true">🎓</span>
+      <span class="brand__text">Student<span class="brand__accent">OS</span></span>
+    </span>
+    <p class="foot__copy">© <span data-year>2026</span> Student OS Pro</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
