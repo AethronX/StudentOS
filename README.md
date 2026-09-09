@@ -10,10 +10,11 @@ The product itself lives in Notion. This repository documents its architecture s
 
 Most student templates are a prettier to-do list. This one is a relational system: courses feed assignments, assignments feed tasks, grades feed GPA automatically.
 
-- **20 connected databases**
-- **25 pre-built views** (tables, boards, calendars, galleries, lists)
+- **21 connected databases**
+- **27 pre-built views** (tables, boards, calendars, galleries, lists)
 - **Automatic GPA** from letter grades and credit hours
-- **Live deadline countdowns** and visual progress bars
+- **Self-updating urgency** — everything with a date tags itself Overdue / Today / This week
+- Mobile-first: every view capped at three visible columns with the title frozen
 - Ships with realistic sample data so it demos immediately
 
 ---
@@ -33,6 +34,7 @@ All databases live on a hidden `⚙️ System Databases` page. Every user-facing
 | Study Materials | Material, Type, Link, Files | Courses |
 | Study Notes | Note, Date, Tags | Courses |
 | Study Projects | Project, Status, Deadline | Courses, Tasks |
+| Academic Goals | Goal, Category, Target Date, Status, Progress, Why It Matters | Courses |
 | Academic Goals | Goal, Category, Target Date, Status, Progress, Why It Matters | Courses |
 | Tasks | Task, Due Date, Status, Priority, Category | Assignments, Projects, Skills |
 | Skills To Learn | Skill, Status, Resources | Tasks |
@@ -81,6 +83,24 @@ Semesters.GPA                  = Total Quality Points ÷ Total Credits   (rounde
 
 **Other calculated fields:**
 
+**Urgency engine** — the reason the system tells you what matters instead of just storing it:
+
+```
+Tasks.Due Status  = ifs(Status == "Done",          "5 · Done",
+                        empty(Due Date),            "6 · No date",
+                        daysUntil(Due Date) <  0,   "1 · Overdue",
+                        daysUntil(Due Date) == 0,   "2 · Today",
+                        daysUntil(Due Date) <= 7,   "3 · This week",
+                        true,                       "4 · Later")
+```
+
+Assignments carry the same field; Exams carry `Countdown` (Today / This week /
+This month / Later / Past). The numeric prefixes exist so that a plain
+ascending sort puts overdue work first — Notion's API cannot create relative
+date filters ("due today"), and silently drops `GROUP BY` on a formula
+property, but it *does* sort by one. Because the formula reads `now()`, the
+ordering re-evaluates every day and never goes stale.
+
 | Field | Definition |
 | --- | --- |
 | `Assignments.Days Remaining` | `dateBetween(Due, now(), "days")` |
@@ -100,7 +120,9 @@ Note: Notion's API does not serialize computed formula/rollup *results* — it r
 ```
 Student OS Pro
 ├── 🚀 Start Here            — onboarding, setup, FAQ
-├── Dashboards               — navigation hub + GPA Overview
+├── 🔁 Weekly Review         — the 10-minute ritual that keeps it alive
+├── 🏠 Dashboard             — navigation hub + GPA Overview
+│   ├── ⚡ Quick Actions     — capture a task, note, assignment, exam, material
 │   ├── 🎓 Student Area      — Courses, Schedule, Goals, Exams, Materials,
 │   │                          Notes, Projects, Agenda, Tasks, Skills
 │   ├── 💼 Jobs Area         — Part-time Job, Internships & Jobs
@@ -124,10 +146,31 @@ Student OS Pro
 
 **Sample data ships with the product.** An empty template forces a buyer to imagine how it works. Seeded courses, assignments, transactions, and habits let the system demonstrate itself, and the onboarding page tells users to clear it.
 
+**Mobile is a constraint, not a feature.** Notion tables scroll sideways forever on a phone, which is where students actually check their work. Every view is capped at three visible properties with the title frozen, and boards and calendars are chosen over tables wherever the data suits them.
+
+**Emoji icons over Notion's built-in icon set.** Setting a built-in icon through the API converts it to an external URL reference; emoji are native, render identically on every platform, and cannot break.
+
 ---
 
-## Roadmap
+## Repository layout
 
-- [ ] Sales landing page with Stripe checkout
-- [ ] Product screenshots for the listing
-- [ ] Duplicate-ready public share link
+```
+README.md      — this document
+assets/covers  — cover art as PNG, for setting Notion page covers by hand
+site/          — bilingual sales page (built, then paused at the owner's
+                 request; not deployed, no checkout connected)
+marketing/     — Instagram carousel generator (paused with the site)
+```
+
+---
+
+## Known limitations
+
+- **Page covers must be set by hand.** Notion's API accepts only external HTTPS
+  URLs for covers — it rejects uploaded files — so the generated PNGs in
+  `assets/covers/` have to be applied through the Notion UI.
+- **Formula and rollup *results* are not readable through the API.** It returns
+  opaque references, so computed values (GPA, urgency tags) were verified
+  structurally rather than by reading them back. Confirm them visually in Notion.
+- **Database templates cannot be created via the API**, so a new course page
+  opens blank rather than pre-structured.
