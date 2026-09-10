@@ -229,7 +229,14 @@ destination is *for* rather than only naming it.
 area. Notion's built-in icon set is avoided: setting one through the API
 converts it into an external URL reference that cannot be verified.
 
-Page covers are the one visual element not applied — see Known limitations.
+**Covers** exist for all 26 pages but are deliberately not applied. Each shares
+one ground — deep navy, colour blooms in screen blend, a faint grid, vignette,
+grain — with the hue family carrying the area and a thin-line motif carrying the
+page: a timetable grid for Class Schedule, a funnel for the internship pipeline,
+a bar breaking a dashed limit line for Finance, the forgetting curve interrupted
+by reviews for Study Hub. Motifs sit right of centre and inside the middle band,
+because Notion crops a cover to roughly that band and draws the page icon and
+title over its lower left. Regenerate with `python3 tools/gen_covers.py`.
 
 ---
 
@@ -255,7 +262,8 @@ Page covers are the one visual element not applied — see Known limitations.
 
 ```
 README.md      — this document
-assets/covers  — cover art as PNG, for setting Notion page covers by hand
+assets/covers  — one cover per page: editable SVG source + rendered JPEG
+tools/         — gen_covers.py, which draws and encodes them
 site/          — bilingual sales page (built, then paused at the owner's
                  request; not deployed, no checkout connected)
 marketing/     — Instagram carousel generator (paused with the site)
@@ -265,9 +273,13 @@ marketing/     — Instagram carousel generator (paused with the site)
 
 ## Known limitations
 
-- **Page covers must be set by hand.** Notion's API accepts only external HTTPS
-  URLs for covers — it rejects uploaded files — so the generated PNGs in
-  `assets/covers/` have to be applied through the Notion UI.
+- **Page covers take a URL, not an upload.** The API rejects `file-upload://`
+  for a cover, but it accepts any external HTTPS URL, so covers *can* be set
+  programmatically — an earlier note in this file said otherwise and was wrong.
+  The art in `assets/covers/` is committed and served from raw.githubusercontent
+  at a pinned commit SHA (immutable, so a renamed branch can never break a
+  buyer's covers). Applying them is a per-page call; today none are applied
+  except the root page's original Unsplash cover, at the owner's request.
 - **Formula and rollup *results* are not readable through the API.** It returns
   opaque references, so computed values (GPA, urgency tags) were verified
   structurally rather than by reading them back. Confirm them visually in Notion.
@@ -326,5 +338,5 @@ product.
    unnamed empty `dashboard` view, and an unnamed table bound to the orphaned
    data source.
 2. Delete the orphaned **"New data source"** on that same database.
-3. Apply the cover art in `assets/covers/`.
+3. Decide on covers. The art exists and the URLs resolve; nothing is applied.
 4. Confirm the GPA renders as expected — the API cannot read computed values.
