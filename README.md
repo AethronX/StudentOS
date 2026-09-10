@@ -10,7 +10,7 @@ The product itself lives in Notion. This repository documents its architecture s
 
 Most student templates are a prettier to-do list. This one is a relational system: courses feed assignments, assignments feed tasks, grades feed GPA automatically.
 
-- **25 connected databases**
+- **28 connected databases**
 - **Every view pre-built** — tables, boards, calendars, timelines, galleries, lists, 7 charts and a form
 - **Automatic GPA** from letter grades and credit hours
 - **Self-updating urgency** — everything with a date tags itself Overdue / Today / This week
@@ -40,6 +40,8 @@ All databases live on a hidden `⚙️ System Databases` page. Every user-facing
 | Study Sessions | Session, Date, Minutes, Technique, Focus, What I covered | Courses |
 | Tasks | Task, Due Date, Status, Priority, Category | Assignments, Projects, Skills |
 | Skills To Learn | Skill, Status, Resources | Tasks |
+| University Applications | University, Program, Country, Status, Deadline, Requirements, Application Fee, Portal Link | — |
+| Extracurriculars | Activity, Type, Role, Status, Hours per Week, Started, Ended, What I Gained | — |
 
 ### Work and money
 
@@ -62,6 +64,7 @@ All databases live on a hidden `⚙️ System Databases` page. Every user-facing
 | Habits | Habit, Category, Goal, Active |
 | Habit Log | Log, Date, Done |
 | Contacts | Name, Type, Phone, Email, Last Contacted, Follow Up |
+| Living Away | Item, Type, Status, Due, Repeats, Who |
 
 ---
 
@@ -97,7 +100,9 @@ Tasks.Due Status  = ifs(Status == "Done",          "5 · Done",
                         true,                       "4 · Later")
 ```
 
-Assignments carry the same field; Exams carry `Countdown` (Today / This week /
+Assignments carry the same field; University Applications carry `Deadline Status`
+(Overdue / Today / Two weeks / Later / Submitted / Closed); Exams carry
+`Countdown` (Today / This week /
 This month / Later / Past). The numeric prefixes exist so that a plain
 ascending sort puts overdue work first — Notion's API cannot create relative
 date filters ("due today"), and silently drops `GROUP BY` on a formula
@@ -148,12 +153,14 @@ Student OS Pro
 ├── 🏠 Dashboard             — navigation hub + GPA Overview
 │   ├── ⚡ Quick Actions     — capture a task, note, assignment, exam, material
 │   ├── 🎓 Student Area      — Courses, Schedule, Goals, Exams, Materials,
-│   │                          Notes, Projects, Agenda, Tasks, Skills
+│   │                          Notes, Projects, Agenda, Tasks, Skills,
+│   │                          University Applications, Extracurriculars
 │   ├── 🧠 Study Hub         — self-scheduling flashcards, session log, chart
 │   ├── 💼 Jobs Area         — Part-time Job, Internships & Applications
 │   ├── 💳 Finance Manager   — one ledger, plus budgets that warn at 80%
-│   └── 🧬 Personal Area     — Fitness, Meals, Journal, Books, Habits, Contacts
-└── ⚙️ System Databases      — 24 of the 25 databases (Assignments lives
+│   └── 🧬 Personal Area     — Fitness, Meals, Journal, Books, Habits,
+│                              Contacts, Living Away
+└── ⚙️ System Databases      — 27 of the 28 databases (Assignments lives
                              under Student Area)
 ```
 
@@ -191,6 +198,28 @@ Action pages that open straight into the right database.
 
 Where the category is already strong — grade calculators, assignment trackers,
 reading lists — this matches rather than reinvents.
+
+### Against Acadashboard (Sealine Study)
+
+The strongest paid competitor on Gumroad: $19.99–$49.99, 4,470+ reviews, built
+by three people including two Notion Experts. Its listing pages could not be
+read directly — Gumroad, notion.com and every template directory are blocked by
+this environment's egress proxy — so its feature set was reconstructed from
+search results and should be treated as approximate.
+
+Five things it shipped that this product did not. Three are now closed:
+
+| Their feature | Response |
+| --- | --- |
+| College admissions page | **Built.** University Applications, with the same urgency engine as the rest of the system: `Deadline Status` re-reads the date daily and sorts the closest deadline to the top. A requirements multi-select shows what each application still needs. |
+| Extracurriculars page | **Built.** Adds *What I Gained* — one CV-ready line written while the memory is fresh — and an hours-per-week field, because three "small" commitments are a part-time job nobody planned. |
+| Dorm / living-away page | **Built.** Living Away covers chores, rotas, repairs and move-in. Money deliberately stays in Finance Manager rather than being duplicated here. |
+| Deep Work timer | **Declined, deliberately.** A timer in Notion is an embedded third-party web app; it records nothing and breaks when that service does. Study Hub instead explains how to run the session and logs it, keeping the data. |
+| Per-year and per-semester page trees | **Not copied.** They duplicate a page structure per semester. This product keeps one database per concept and filters by `Semester`, so a new term is a row rather than a rebuilt page tree. Their pitch ("no need to reset your system") is real; the same benefit falls out of the relational design without the duplication. |
+
+Two of their advantages cannot be matched by building anything: 4,470+ reviews,
+and a setup video. The review count is a genuine moat and should be respected
+in pricing rather than argued with.
 
 **Feedback, not just storage.** Seven chart views turn logged data back into
 something you can act on: where study hours actually went, where the money
@@ -288,6 +317,9 @@ marketing/     — Instagram carousel generator (paused with the site)
 - **Button blocks cannot be created via the API** either — they read back as an
   unknown block type. One-tap "review this card" grading would otherwise be a
   button; today it is two field edits.
+- **Formulas must wrap property names in `prop()`.** A bare `Deadline` is
+  rejected with "Type error with formula" while `prop("Deadline")` is accepted,
+  even though the Notion UI takes the bare form.
 - **`GROUP BY` on a formula property is silently dropped.** The API accepts the
   request and returns a view with no grouping. Sorting on a formula does work,
   which is why the status labels carry numeric prefixes.
