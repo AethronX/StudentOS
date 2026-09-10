@@ -11,7 +11,7 @@ The product itself lives in Notion. This repository documents its architecture s
 Most student templates are a prettier to-do list. This one is a relational system: courses feed assignments, assignments feed tasks, grades feed GPA automatically.
 
 - **25 connected databases**
-- **46 pre-built views** (tables, boards, calendars, timelines, galleries, lists, 7 charts, a form)
+- **Every view pre-built** — tables, boards, calendars, timelines, galleries, lists, 7 charts and a form
 - **Automatic GPA** from letter grades and credit hours
 - **Self-updating urgency** — everything with a date tags itself Overdue / Today / This week
 - Mobile-first: every view capped at three visible columns with the title frozen
@@ -150,11 +150,11 @@ Student OS Pro
 │   ├── 🎓 Student Area      — Courses, Schedule, Goals, Exams, Materials,
 │   │                          Notes, Projects, Agenda, Tasks, Skills
 │   ├── 🧠 Study Hub         — self-scheduling flashcards, session log, chart
-│   ├── 💼 Jobs Area         — Part-time Job, Internships & Jobs
-│   ├── 💳 Finance Manager   — Finance OS Pro
+│   ├── 💼 Jobs Area         — Part-time Job, Internships & Applications
+│   ├── 💳 Finance Manager   — one ledger, plus budgets that warn at 80%
 │   └── 🧬 Personal Area     — Fitness, Meals, Journal, Books, Habits, Contacts
-├── Work Flow                — quick-action navigation
-└── ⚙️ System Databases      — all 20 databases (hidden from navigation)
+└── ⚙️ System Databases      — 24 of the 25 databases (Assignments lives
+                             under Student Area)
 ```
 
 ---
@@ -279,3 +279,52 @@ marketing/     — Instagram carousel generator (paused with the site)
 - **`GROUP BY` on a formula property is silently dropped.** The API accepts the
   request and returns a view with no grouping. Sorting on a formula does work,
   which is why the status labels carry numeric prefixes.
+- **Views cannot be deleted via the API.** There is no delete-view operation, so
+  a junk view can only be renamed and reconfigured into something useful, or
+  removed by hand in the Notion UI.
+- **An orphaned data source can become unreachable.** The Assignments database
+  carries a second, empty data source left over from the original workspace.
+  Both `in_trash` and `title` updates against it return `404 object_not_found`,
+  so it can only be removed through the Notion UI. The database's own title was
+  set explicitly to stop it rendering as *"Assignments and New data source"*.
+
+---
+
+## Pre-launch audit
+
+A full page-by-page verification pass was run before launch. Every buyer-facing
+claim was checked against the actual schema — each property, view and status
+option named in the copy was confirmed to exist. Defects found and fixed:
+
+| Class | Instances | Examples |
+| --- | --- | --- |
+| Copy contradicted layout | 3 | Agenda promised ⭐ Focus was "the last board" when it was 4th of 6; Weekly Review named a view *Focus — by urgency* that does not exist |
+| Leftover content from the original workspace | 4 | A page titled **WORK** containing one pasted image, sitting between Agenda's boards; stray `📘 Book Overview` and `🔥 Habit Overview` text above hero callouts; an empty list bullet opening Part-time Job |
+| Unfinished wireframe text | 1 | Books Library ended on a dangling `📊 Rating:` label |
+| False statement to the buyer | 1 | System Databases claimed to be "intentionally hidden from the main navigation" while listed on the root page |
+| Duplicated copy | 3 | Dashboard Quick Actions listed all five actions twice; Study Notes and Academic Goals restated their own hero callouts |
+| Flat pages off the design system | 5 | Finance Manager, Part-time Job, Internships, Fitness, Habit Tracker, Contacts used plain emoji-prefixed text where every other page uses callout columns |
+| Cosmetic cruft | 12 | Stray `<empty-block/>` filler; a doubled ⚙️ in the admin page title; 🧠 used by two sibling pages |
+
+**Deleted as neither important nor useful:**
+
+- **Work Flow** — a 25-button launcher whose own copy admitted it "mirrors the
+  Dashboard exactly" and warned buyers that its buttons might not "jump where
+  you expect". The buttons were unreadable through the API and therefore
+  unverifiable; shipping a page that tells a paying customer its links may be
+  broken is worse than not shipping it.
+- **WORK** — a leftover page holding a single pasted image.
+
+**Left in place deliberately:** *Basic Student OS*, a separate half-built product
+in the same workspace. It is out of scope for Student OS Pro and is the owner's
+to keep or delete — not something to remove during a cleanup of a different
+product.
+
+### Requires the Notion UI (the API cannot do these)
+
+1. Delete the two remaining junk views on the **Assignments** database: an
+   unnamed empty `dashboard` view, and an unnamed table bound to the orphaned
+   data source.
+2. Delete the orphaned **"New data source"** on that same database.
+3. Apply the cover art in `assets/covers/`.
+4. Confirm the GPA renders as expected — the API cannot read computed values.
