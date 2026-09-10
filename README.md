@@ -200,6 +200,39 @@ data and never show it back.
 
 ---
 
+## Visual design system
+
+Researched against the templates the category actually rewards. The recurring
+advice from designers who build these for a living is blunt: *single-column
+pages read like notes, multi-column pages read like systems*, and repeating one
+callout style across a page is what makes a layout look designed rather than
+typed. Both are applied here.
+
+**Every page opens with one hero callout** — a coloured card carrying the
+page's promise in a sentence, never a bare heading.
+
+**Colour is assigned by area, not by mood**, so the palette reads as one system:
+
+| Area | Colour |
+| --- | --- |
+| Academic — courses, notes, materials, projects | blue |
+| Urgency — agenda, tasks, exams, habits | red / orange |
+| Study Hub, journal, skills, jobs | purple |
+| Finance, goals | green |
+| Personal — fitness, meals, books | pink / brown |
+
+**Navigation is a card grid, not a list.** The Dashboard and the front page
+both open with two rows of three linked cards, each stating what the
+destination is *for* rather than only naming it.
+
+**Icons are emoji**, one per page, never repeated across two pages in the same
+area. Notion's built-in icon set is avoided: setting one through the API
+converts it into an external URL reference that cannot be verified.
+
+Page covers are the one visual element not applied — see Known limitations.
+
+---
+
 ## Design decisions
 
 **One database, many views.** Rather than duplicating data per page, each page renders a filtered view of a shared database. Adding an assignment anywhere makes it appear everywhere it's relevant.
