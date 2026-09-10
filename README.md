@@ -10,8 +10,8 @@ The product itself lives in Notion. This repository documents its architecture s
 
 Most student templates are a prettier to-do list. This one is a relational system: courses feed assignments, assignments feed tasks, grades feed GPA automatically.
 
-- **23 connected databases**
-- **35 pre-built views** (tables, boards, calendars, galleries, lists, charts, a form)
+- **24 connected databases**
+- **42 pre-built views** (tables, boards, calendars, timeline, galleries, lists, 7 charts, a form)
 - **Automatic GPA** from letter grades and credit hours
 - **Self-updating urgency** — everything with a date tags itself Overdue / Today / This week
 - Mobile-first: every view capped at three visible columns with the title frozen
@@ -46,7 +46,8 @@ All databases live on a hidden `⚙️ System Databases` page. Every user-facing
 | --- | --- | --- |
 | Jobs & Internships | Position, Company, Type, Status, Pay Rate, Applied Date | Work Shifts |
 | Work Shifts | Shift, Date, Hours, Rate | Jobs |
-| Finance Transactions | Description, Type, Category, Amount, Date | — |
+| Finance Transactions | Description, Type, Category, Amount, Date | Budgets |
+| Budgets | Budget, Month, Category, Limit | Finance Transactions |
 
 ### Personal
 
@@ -112,6 +113,9 @@ ordering re-evaluates every day and never goes stale.
 | `Habits.Completion Rate` | `rollup(Log → Done, average)` |
 | `Habits.Success Rate %` | `round(Completion Rate × 100)` |
 | `Courses.Study Minutes` | `rollup(Study Sessions → Minutes, sum)` |
+| `Budgets.Spent` | `rollup(Transactions → Amount, sum)` |
+| `Budgets.Status` | 🟢 on track · 🟡 past 80% of limit · 🔴 over |
+| `Books.Progress` | bar + percentage from Current Page ÷ Pages |
 
 **Spaced repetition** — the flashcard scheduler:
 
@@ -186,6 +190,12 @@ Action pages that open straight into the right database.
 
 Where the category is already strong — grade calculators, assignment trackers,
 reading lists — this matches rather than reinvents.
+
+**Feedback, not just storage.** Seven chart views turn logged data back into
+something you can act on: where study hours actually went, where the money
+went, how the term actually felt, which courses are being avoided, and how
+credits are distributed across grades. Most templates in this category store
+data and never show it back.
 
 ---
 
