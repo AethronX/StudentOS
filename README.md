@@ -11,7 +11,7 @@ The product itself lives in Notion. This repository documents its architecture s
 Most student templates are a prettier to-do list. This one is a relational system: courses feed assignments, assignments feed tasks, grades feed GPA automatically.
 
 - **25 connected databases**
-- **44 pre-built views** (tables, boards, calendars, timeline, galleries, lists, 7 charts, a form)
+- **46 pre-built views** (tables, boards, calendars, timelines, galleries, lists, 7 charts, a form)
 - **Automatic GPA** from letter grades and credit hours
 - **Self-updating urgency** — everything with a date tags itself Overdue / Today / This week
 - Mobile-first: every view capped at three visible columns with the title frozen
